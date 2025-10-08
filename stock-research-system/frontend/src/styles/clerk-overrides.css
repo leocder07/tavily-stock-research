@@ -1,0 +1,969 @@
+/* ===== CLERK AUTHENTICATION UI/UX OVERRIDES ===== */
+/* Premium dark theme with cyan/teal accents */
+
+/* Main modal container - optimized for content visibility */
+.cl-modalContent,
+.cl-component.cl-modalContent,
+.cl-rootBox.cl-modalContent {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  max-width: 680px !important;
+  width: 90vw !important;
+  max-height: 88vh !important; /* Optimized height */
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  /* Smooth scrolling */
+  scroll-behavior: smooth !important;
+  /* Show scrollbar for better UX */
+  scrollbar-width: thin !important;
+  /* Padding to prevent content cut-off */
+  padding: 3vh 0 3vh 0 !important; /* Balanced padding */
+}
+
+/* Card styling with glassmorphism */
+.cl-card,
+.cl-rootBox,
+.cl-signIn-root,
+.cl-signUp-root {
+  background: rgba(26, 26, 31, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(0, 212, 170, 0.2) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 80px rgba(0, 212, 170, 0.1) !important;
+  padding: 32px 40px !important;
+  margin: 0 auto !important;
+  min-height: auto !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+/* Backdrop styling */
+.cl-modalBackdrop {
+  background-color: rgba(0, 0, 0, 0.92) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* Dialog centering */
+div[role="dialog"],
+div[data-clerk-portal="clerk-components"],
+div[data-clerk-theme] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100vh !important;
+}
+
+/* Portal positioning */
+body > div[data-clerk-portal] {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 9999 !important;
+}
+
+/* ===== TYPOGRAPHY ===== */
+
+/* Header title */
+.cl-headerTitle {
+  color: #ffffff !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  margin-bottom: 12px !important;
+  letter-spacing: -0.5px !important;
+  line-height: 1.2 !important;
+  word-wrap: break-word !important;
+}
+
+/* Header subtitle */
+.cl-headerSubtitle {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  margin-bottom: 24px !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+/* Email display in OTP/verification screens */
+.cl-headerSubtitle code,
+.cl-headerSubtitle strong,
+.cl-headerSubtitle span {
+  display: inline-block !important;
+  max-width: 100% !important;
+  word-break: break-all !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 600 !important;
+}
+
+/* ===== FORM INPUTS ===== */
+
+/* Form field rows - balanced spacing for readability */
+.cl-formFieldRow {
+  margin-bottom: 16px !important; /* Better spacing for visual hierarchy */
+}
+
+/* Last form field - no extra margin */
+.cl-formFieldRow:last-of-type {
+  margin-bottom: 20px !important;
+}
+
+/* Input labels */
+.cl-formFieldLabel {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 14px !important; /* Readable size for accessibility */
+  font-weight: 600 !important;
+  margin-bottom: 8px !important; /* Better label-input association */
+  letter-spacing: 0.2px !important;
+  display: block !important;
+  line-height: 1.4 !important;
+}
+
+/* Optional label indicator */
+.cl-formFieldLabel__optional {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  margin-left: 4px !important;
+}
+
+/* Input fields */
+.cl-formFieldInput,
+.cl-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 2px solid rgba(255, 255, 255, 0.15) !important; /* Thicker for better visibility */
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  font-size: 15px !important; /* Readable size */
+  padding: 12px 16px !important; /* Comfortable touch target */
+  transition: all 0.2s ease !important;
+  height: 48px !important; /* Better accessibility - min 44px touch target */
+  line-height: 1.5 !important;
+}
+
+.cl-formFieldInput:hover,
+.cl-input:hover {
+  border-color: rgba(0, 212, 170, 0.4) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.cl-formFieldInput:focus,
+.cl-input:focus {
+  border-color: #00D4AA !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.2) !important; /* Stronger focus indicator */
+  outline: none !important;
+}
+
+/* Focus-visible for keyboard navigation */
+.cl-formFieldInput:focus-visible,
+.cl-input:focus-visible {
+  box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.3) !important;
+}
+
+/* Input placeholder */
+.cl-formFieldInput::placeholder,
+.cl-input::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Password input wrapper */
+.cl-formFieldInput__password {
+  position: relative !important;
+}
+
+/* Password toggle button - inline overlay style */
+.cl-formFieldInputShowPasswordButton,
+.cl-internal-b3fm6y,
+button[aria-label*="password"],
+button[aria-label*="Password"] {
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: transparent !important;
+  border: none !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  padding: 4px !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: auto !important;
+  box-shadow: none !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  transition: color 0.2s ease !important;
+  z-index: 10 !important;
+}
+
+.cl-formFieldInputShowPasswordButton:hover,
+.cl-internal-b3fm6y:hover,
+button[aria-label*="password"]:hover,
+button[aria-label*="Password"]:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  transform: translateY(-50%) !important;
+  box-shadow: none !important;
+}
+
+.cl-formFieldInputShowPasswordButton:active,
+button[aria-label*="password"]:active {
+  transform: translateY(-50%) scale(0.95) !important;
+}
+
+/* Password input - add padding for toggle button */
+input[type="password"],
+input[name="password"],
+.cl-formFieldInput[type="password"] {
+  padding-right: 44px !important;
+}
+
+/* ===== PRIMARY BUTTON ===== */
+
+.cl-formButtonPrimary,
+.cl-button {
+  background: linear-gradient(135deg, #00D4AA 0%, #00B894 100%) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: #FFFFFF !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  padding: 14px 24px !important;
+  height: 52px !important; /* Minimum 44px for accessibility */
+  width: 100% !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 4px 20px rgba(0, 212, 170, 0.35) !important;
+  letter-spacing: 0.3px !important;
+  margin-top: 4px !important;
+}
+
+.cl-formButtonPrimary:hover,
+.cl-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 28px rgba(0, 212, 170, 0.5) !important;
+  background: linear-gradient(135deg, #00B894 0%, #00D4AA 100%) !important;
+}
+
+.cl-formButtonPrimary:active,
+.cl-button:active {
+  transform: translateY(0px) !important;
+}
+
+.cl-formButtonPrimary:focus,
+.cl-button:focus {
+  box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.3), 0 4px 20px rgba(0, 212, 170, 0.35) !important;
+  outline: none !important;
+}
+
+/* ===== SOCIAL BUTTONS ===== */
+
+/* Social buttons container */
+.cl-socialButtonsBlock {
+  gap: 12px !important;
+  margin-bottom: 16px !important;
+}
+
+.cl-socialButtonsBlockButton {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 2px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  padding: 13px 20px !important;
+  height: 48px !important; /* Accessibility standard */
+  transition: all 0.2s ease !important;
+}
+
+.cl-socialButtonsBlockButton:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(0, 212, 170, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+.cl-socialButtonsBlockButton:focus {
+  border-color: #00D4AA !important;
+  box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.2) !important;
+  outline: none !important;
+}
+
+.cl-socialButtonsBlockButton svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* Social buttons container */
+.cl-socialButtonsBlockButtonArrow {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Divider - balanced spacing */
+.cl-dividerRow {
+  margin: 20px 0 !important;
+}
+
+.cl-dividerLine {
+  background: rgba(255, 255, 255, 0.1) !important;
+  height: 1px !important;
+}
+
+.cl-dividerText {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 12px !important; /* Reduced from 13px */
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  padding: 0 16px !important;
+}
+
+/* ===== FOOTER LINKS ===== */
+
+.cl-footer {
+  margin-top: 24px !important;
+  padding-top: 20px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.cl-footerActionLink,
+.cl-footerActionText {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 15px !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+  line-height: 1.5 !important;
+}
+
+.cl-footerActionLink {
+  color: #00D4AA !important;
+  font-weight: 600 !important;
+}
+
+.cl-footerActionLink:hover {
+  color: #00B894 !important;
+  text-decoration: underline !important;
+}
+
+.cl-footerActionText {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Footer action buttons (like "Resend code") */
+.cl-footerAction button,
+.cl-footerAction__resend {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease !important;
+  background: rgba(0, 212, 170, 0.15) !important;
+  border: 2px solid rgba(0, 212, 170, 0.3) !important;
+  padding: 16px 32px !important;
+  border-radius: 14px !important;
+  cursor: pointer !important;
+  width: 100% !important;
+  margin: 16px 0 !important;
+  display: block !important;
+  text-align: center !important;
+  box-shadow: 0 2px 8px rgba(0, 212, 170, 0.1) !important;
+}
+
+.cl-footerAction button:hover,
+.cl-footerAction__resend:hover {
+  background: rgba(0, 212, 170, 0.2) !important;
+  border-color: rgba(0, 212, 170, 0.5) !important;
+  color: #00D4AA !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 212, 170, 0.2) !important;
+}
+
+.cl-footerAction button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+/* Countdown timer in resend button */
+.cl-footerAction button span {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-weight: 600 !important;
+}
+
+/* ===== OTP CODE INPUT ===== */
+
+/* OTP verification screen specific styling */
+.cl-signIn-root [data-localization-key*="verify"],
+.cl-signUp-root [data-localization-key*="verify"] {
+  padding: 40px !important;
+}
+
+.cl-otpCodeFieldInput {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 3px solid rgba(0, 212, 170, 0.25) !important;
+  border-radius: 16px !important;
+  color: #ffffff !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  width: 56px !important;
+  height: 64px !important;
+  text-align: center !important;
+  margin: 0 !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  line-height: 1 !important;
+  font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.cl-otpCodeFieldInput:hover {
+  border-color: rgba(0, 212, 170, 0.5) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 4px 12px rgba(0, 212, 170, 0.15) !important;
+}
+
+.cl-otpCodeFieldInput:focus {
+  border-color: #00D4AA !important;
+  background: rgba(0, 212, 170, 0.12) !important;
+  box-shadow: 0 0 0 5px rgba(0, 212, 170, 0.2), 0 4px 16px rgba(0, 212, 170, 0.3) !important;
+  outline: none !important;
+  transform: scale(1.08) !important;
+}
+
+/* Active/filled OTP input */
+.cl-otpCodeFieldInput:not(:placeholder-shown) {
+  background: rgba(0, 212, 170, 0.15) !important;
+  border-color: #00D4AA !important;
+}
+
+.cl-otpCodeFieldInputs {
+  gap: 12px !important;
+  margin: 36px 0 28px 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  padding: 0 !important;
+}
+
+/* OTP header styling */
+.cl-headerTitle[data-localization-key*="verify"] {
+  font-size: 32px !important;
+  margin-bottom: 16px !important;
+}
+
+.cl-headerSubtitle[data-localization-key*="verify"] {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  margin-bottom: 32px !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* ===== ERROR MESSAGES ===== */
+
+.cl-formFieldErrorText,
+.cl-alertError {
+  color: #FF6B6B !important;
+  font-size: 14px !important;
+  margin-top: 12px !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+}
+
+/* Error icon styling */
+.cl-formFieldErrorText::before,
+.cl-alertError::before {
+  content: '⚠' !important;
+  font-size: 16px !important;
+  display: inline-block !important;
+}
+
+.cl-alert {
+  background: rgba(255, 107, 107, 0.12) !important;
+  border: 2px solid rgba(255, 107, 107, 0.4) !important;
+  border-radius: 12px !important;
+  padding: 14px 18px !important;
+  margin: 16px 0 !important;
+  text-align: center !important;
+}
+
+/* OTP specific error styling */
+.cl-otpCodeFieldInputs ~ .cl-formFieldErrorText {
+  margin-top: 20px !important;
+  font-size: 15px !important;
+}
+
+/* ===== ALTERNATIVE METHODS ===== */
+
+.cl-alternativeMethodsBlockButton,
+.cl-footerActionLink[href*="method"] {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: #00D4AA !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  padding: 12px 16px !important;
+  height: auto !important;
+  transition: all 0.2s ease !important;
+  margin: 16px 0 0 0 !important;
+  text-align: center !important;
+  display: block !important;
+  width: 100% !important;
+  text-decoration: none !important;
+  border-bottom: 2px solid transparent !important;
+}
+
+.cl-alternativeMethodsBlockButton:hover,
+.cl-footerActionLink[href*="method"]:hover {
+  background: rgba(0, 212, 170, 0.08) !important;
+  border-bottom-color: #00D4AA !important;
+  color: #00B894 !important;
+  transform: none !important;
+}
+
+.cl-alternativeMethodsBlockButton:focus,
+.cl-footerActionLink[href*="method"]:focus {
+  background: rgba(0, 212, 170, 0.1) !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* "Use another method" link specific styling */
+.cl-footerPages a,
+.cl-footerAction a {
+  color: #00D4AA !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  padding: 12px !important;
+  display: inline-block !important;
+  transition: all 0.2s ease !important;
+  border-bottom: 2px solid transparent !important;
+}
+
+.cl-footerPages a:hover,
+.cl-footerAction a:hover {
+  color: #00B894 !important;
+  border-bottom-color: #00D4AA !important;
+}
+
+/* ===== IDENTIFIER LIST ===== */
+
+/* Email identifier badge in OTP screen */
+.cl-identifierList__identifierListItem,
+.cl-internal-1kbufpx {
+  background: rgba(0, 212, 170, 0.15) !important;
+  border: 2px solid rgba(0, 212, 170, 0.3) !important;
+  border-radius: 14px !important;
+  padding: 14px 20px !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 20px 0 !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Email text */
+.cl-identifierList__identifier {
+  color: #00D4AA !important;
+  font-weight: 700 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* Edit button next to email */
+.cl-identifierList__button,
+button[aria-label*="Change"] {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 10px !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding: 8px 16px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+}
+
+.cl-identifierList__button:hover,
+button[aria-label*="Change"]:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: #00D4AA !important;
+  color: #00D4AA !important;
+}
+
+/* ===== LOADING SPINNER ===== */
+
+.cl-spinner {
+  border-color: rgba(0, 212, 170, 0.2) !important;
+  border-top-color: #00D4AA !important;
+}
+
+/* ===== BADGES ===== */
+
+.cl-badge {
+  background: linear-gradient(135deg, #00D4AA 0%, #00B894 100%) !important;
+  color: #FFFFFF !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+}
+
+/* ===== FORM FIELD ACTIONS ===== */
+
+.cl-formFieldAction {
+  color: #00D4AA !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+}
+
+.cl-formFieldAction:hover {
+  color: #00B894 !important;
+}
+
+/* ===== BACK BUTTON ===== */
+
+.cl-backButton,
+.cl-backLink {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  padding: 10px 16px !important;
+  border-radius: 10px !important;
+  transition: all 0.2s ease !important;
+  background: transparent !important;
+  border: 2px solid transparent !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.cl-backButton:hover,
+.cl-backLink:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #00D4AA !important;
+}
+
+/* Back arrow icon */
+.cl-backButton svg,
+.cl-backLink svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* ===== NAVBAR/HEADER CUSTOMIZATION ===== */
+
+.cl-navbar {
+  padding: 4px 0 10px !important; /* Minimal padding */
+}
+
+.cl-logoBox {
+  margin-bottom: 10px !important; /* Minimal margin */
+}
+
+.cl-logoImage {
+  border-radius: 12px !important;
+  width: 40px !important; /* Smaller for vertical space */
+  height: 40px !important;
+}
+
+/* ===== SCROLL INDICATOR ===== */
+
+/* Add subtle fade at bottom when content is scrollable */
+.cl-modalContent::after {
+  content: '' !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 24px !important; /* Reduced for height squeeze */
+  background: linear-gradient(to top, rgba(26, 26, 31, 0.95), transparent) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* ===== RESPONSIVE STYLES ===== */
+
+/* Mobile (< 768px) */
+@media (max-width: 767px) {
+  .cl-modalContent,
+  .cl-component.cl-modalContent,
+  .cl-rootBox.cl-modalContent {
+    max-width: 95vw !important;
+    width: 95vw !important;
+  }
+
+  .cl-card {
+    padding: 28px 20px !important;
+    border-radius: 20px !important;
+  }
+
+  .cl-headerTitle {
+    font-size: 24px !important;
+  }
+
+  .cl-headerSubtitle {
+    font-size: 14px !important;
+  }
+
+  .cl-formFieldInput,
+  .cl-input {
+    font-size: 16px !important;
+    height: 52px !important;
+  }
+
+  .cl-formButtonPrimary {
+    font-size: 15px !important;
+    height: 48px !important;
+  }
+
+  .cl-socialButtonsBlockButton {
+    font-size: 14px !important;
+    padding: 12px 18px !important;
+    height: 46px !important;
+  }
+
+  .cl-otpCodeFieldInput {
+    width: 48px !important;
+    height: 56px !important;
+    font-size: 24px !important;
+    margin: 0 4px !important;
+  }
+
+  .cl-otpCodeFieldInputs {
+    gap: 8px !important;
+  }
+}
+
+/* Small mobile (< 375px) */
+@media (max-width: 374px) {
+  .cl-card {
+    padding: 24px 16px !important;
+  }
+
+  .cl-headerTitle {
+    font-size: 22px !important;
+  }
+
+  .cl-otpCodeFieldInput {
+    width: 42px !important;
+    height: 50px !important;
+    font-size: 22px !important;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .cl-modalContent,
+  .cl-component.cl-modalContent,
+  .cl-rootBox.cl-modalContent {
+    max-width: 520px !important;
+  }
+
+  .cl-card {
+    padding: 44px 36px !important;
+  }
+
+  .cl-otpCodeFieldInput {
+    width: 52px !important;
+    height: 60px !important;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .cl-modalContent,
+  .cl-component.cl-modalContent,
+  .cl-rootBox.cl-modalContent {
+    max-width: 680px !important;
+    width: 680px !important; /* Wider for better horizontal layout */
+  }
+
+  .cl-card,
+  .cl-rootBox,
+  .cl-signIn-root,
+  .cl-signUp-root {
+    padding: 28px 48px !important; /* Squeezed vertically, expanded horizontally */
+    border-radius: 24px !important;
+  }
+
+  .cl-headerTitle {
+    font-size: 30px !important; /* Slightly smaller */
+    margin-bottom: 8px !important;
+    line-height: 1.2 !important;
+  }
+
+  .cl-headerSubtitle {
+    font-size: 15px !important;
+    margin-bottom: 24px !important; /* Reduced from 32px */
+    line-height: 1.4 !important;
+  }
+
+  .cl-formFieldInput,
+  .cl-input {
+    height: 52px !important;
+    font-size: 16px !important;
+    padding: 16px 18px !important;
+  }
+
+  .cl-formButtonPrimary,
+  .cl-button {
+    height: 56px !important;
+    font-size: 17px !important;
+    padding: 16px 28px !important;
+  }
+
+  .cl-socialButtonsBlockButton {
+    height: 52px !important;
+    font-size: 16px !important;
+    padding: 14px 22px !important;
+  }
+
+  .cl-otpCodeFieldInput {
+    width: 60px !important;
+    height: 68px !important;
+    font-size: 30px !important;
+    margin: 0 8px !important;
+  }
+
+  .cl-otpCodeFieldInputs {
+    gap: 16px !important;
+    margin: 32px 0 !important;
+  }
+
+  /* Improved spacing for desktop */
+  .cl-formFieldLabel {
+    font-size: 15px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .cl-dividerText {
+    font-size: 14px !important;
+    padding: 0 20px !important;
+  }
+
+  .cl-footerActionLink,
+  .cl-footerActionText {
+    font-size: 15px !important;
+  }
+}
+
+/* Large Desktop (1440px+) - Premium experience */
+@media (min-width: 1440px) {
+  .cl-modalContent,
+  .cl-component.cl-modalContent,
+  .cl-rootBox.cl-modalContent {
+    max-width: 720px !important;
+    width: 720px !important; /* Even wider for large screens */
+  }
+
+  .cl-card,
+  .cl-rootBox,
+  .cl-signIn-root,
+  .cl-signUp-root {
+    padding: 32px 56px !important; /* Minimal vertical, generous horizontal */
+  }
+
+  .cl-headerTitle {
+    font-size: 32px !important; /* Reduced from 36px */
+    letter-spacing: -0.6px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .cl-headerSubtitle {
+    font-size: 16px !important; /* Reduced from 17px */
+    line-height: 1.5 !important;
+    margin-bottom: 24px !important;
+  }
+}
+
+/* Landscape mobile */
+@media (max-height: 650px) and (orientation: landscape) {
+  .cl-modalContent,
+  .cl-component.cl-modalContent,
+  .cl-rootBox.cl-modalContent {
+    max-height: 96vh !important;
+    overflow-y: auto !important;
+  }
+
+  .cl-card {
+    padding: 20px 24px !important;
+  }
+
+  .cl-headerTitle {
+    font-size: 22px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .cl-headerSubtitle {
+    margin-bottom: 16px !important;
+  }
+
+  .cl-formButtonPrimary {
+    height: 44px !important;
+  }
+
+  .cl-otpCodeFieldInput {
+    height: 50px !important;
+  }
+
+  .cl-otpCodeFieldInputs {
+    margin: 20px 0 !important;
+  }
+}
+
+/* ===== SCROLLBAR CUSTOMIZATION ===== */
+
+.cl-modalContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cl-modalContent::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+}
+
+.cl-modalContent::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 170, 0.3);
+  border-radius: 10px;
+}
+
+.cl-modalContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 212, 170, 0.5);
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.cl-modalContent {
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}

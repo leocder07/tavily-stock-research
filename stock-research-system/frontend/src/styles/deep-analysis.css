@@ -1,0 +1,115 @@
+/* Deep Analysis - High Contrast Tab Styles */
+/* WCAG AAA Compliant - 7:1 contrast ratio */
+
+.high-contrast-tabs .ant-tabs-tab {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.high-contrast-tabs .ant-tabs-tab-active {
+  color: #00D9FF !important;
+  font-weight: 600;
+}
+
+.high-contrast-tabs .ant-tabs-tab:hover {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.high-contrast-tabs .ant-tabs-ink-bar {
+  background: linear-gradient(90deg, #00D9FF 0%, #00F5FF 100%);
+  height: 3px;
+}
+
+.high-contrast-tabs .ant-tabs-tab span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.high-contrast-tabs .ant-tabs-tab .anticon {
+  font-size: 16px;
+}
+
+/* Metric Card Styles - Visual Hierarchy */
+.metric-card-hero {
+  min-height: 140px;
+}
+
+.metric-card-hero .ant-statistic-content {
+  font-size: 36px !important;
+  font-weight: 700;
+}
+
+.metric-card-core .ant-statistic-content {
+  font-size: 24px !important;
+  font-weight: 600;
+}
+
+.metric-card-support .ant-statistic-content {
+  font-size: 18px !important;
+}
+
+/* Text Truncation with Ellipsis */
+.truncate-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+}
+
+.truncate-text-single {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Responsive Container & Layout Utilities */
+.deep-analysis-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Word Wrapping for Long Text */
+.word-wrap {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Prevent Horizontal Overflow */
+.no-overflow {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Responsive Grid Utilities */
+@media (max-width: 768px) {
+  .metric-card-hero .ant-statistic-content {
+    font-size: 28px !important;
+  }
+
+  .metric-card-core .ant-statistic-content {
+    font-size: 20px !important;
+  }
+
+  .high-contrast-tabs .ant-tabs-tab {
+    font-size: 12px;
+  }
+}
+
+/* Ensure Cards Don't Stretch Beyond Container */
+.ant-card {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.ant-row {
+  max-width: 100%;
+}
