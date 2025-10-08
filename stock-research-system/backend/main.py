@@ -45,7 +45,7 @@ load_dotenv()
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO,
+    level=getattr(logging, os.getenv("LOG_LEVEL", "INFO").upper()),
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
@@ -172,6 +172,26 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("Starting Stock Research System API...")
 
+    # Validate required configuration
+    required_vars = {
+        "MONGODB_URL": os.getenv("MONGODB_URL"),
+        "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY")
+    }
+
+    missing_vars = [var for var, value in required_vars.items() if not value]
+    if missing_vars:
+        error_msg = f"Missing required environment variables: {', '.join(missing_vars)}"
+        logger.error(error_msg)
+        raise RuntimeError(error_msg)
+
+    # Log sanitized configuration
+    logger.info(f"Environment: {os.getenv('ENVIRONMENT', 'development')}")
+    logger.info(f"Log level: {os.getenv('LOG_LEVEL', 'INFO')}")
+    logger.info(f"MongoDB configured: {bool(os.getenv('MONGODB_URL'))}")
+    logger.info(f"OpenAI API configured: {bool(os.getenv('OPENAI_API_KEY'))}")
+    logger.info(f"Tavily API configured: {bool(os.getenv('TAVILY_API_KEY'))}")
+    logger.info(f"Redis configured: {bool(os.getenv('REDIS_URL'))}")
+
     # Initialize MongoDB connection using singleton pattern
     global database
 
@@ -241,18 +261,32 @@ app = FastAPI(
 # Setup comprehensive error handling
 setup_error_handling(app, debug=os.getenv("DEBUG", "False").lower() == "true")
 
-# Configure CORS - Allow all localhost ports for development
+# Configure CORS - Production-ready with environment-driven origins
+ALLOWED_ORIGINS = os.getenv("CORS_ORIGINS", "").split(",") if os.getenv("CORS_ORIGINS") else [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:3002",
+    "http://localhost:8000"
+]
+
+# Add production origins if specified
+if os.getenv("FRONTEND_URL"):
+    ALLOWED_ORIGINS.append(os.getenv("FRONTEND_URL"))
+
+logger.info(f"CORS allowed origins: {ALLOWED_ORIGINS}")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:3002",
-        "http://localhost:8000"
-    ],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=[
+        "X-Total-Count",
+        "X-Page-Number",
+        "X-Page-Size"
+    ],
+    max_age=600  # Cache preflight requests for 10 minutes
 )
 
 # Include memory and progress endpoints
@@ -332,7 +366,16 @@ async def root():
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint."""
+    """Health check endpoint (legacy)."""
+    return await healthz()
+
+
+@app.get("/healthz")
+async def healthz():
+    """
+    AWS Elastic Beanstalk health check endpoint.
+    Returns 200 OK if service is healthy, 503 if unhealthy.
+    """
     try:
         # Check database using the connection class
         db_info = await mongodb_connection.health_check()
@@ -341,11 +384,23 @@ async def health_check():
         logger.error(f"Health check error: {e}")
         db_status = "unhealthy"
 
-    return {
+    health_response = {
         "status": "healthy",
         "database": db_status,
-        "timestamp": datetime.utcnow().isoformat()
+        "timestamp": datetime.utcnow().isoformat(),
+        "service": "stock-research-api",
+        "version": "1.0.0"
     }
+
+    # Return 503 if database is unhealthy
+    if db_status == "unhealthy":
+        health_response["status"] = "unhealthy"
+        return JSONResponse(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            content=health_response
+        )
+
+    return health_response
 
 
 @app.get("/api/v1/system/rate-limits")
