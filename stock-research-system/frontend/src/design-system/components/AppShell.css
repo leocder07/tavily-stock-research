@@ -1,0 +1,135 @@
+/* AppShell Component Styles */
+
+.app-shell {
+  background: var(--colors-background-primary);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Header Styles */
+.app-shell__header {
+  display: flex;
+  align-items: center;
+  padding: 0 24px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(28, 28, 30, 0.95) !important;
+}
+
+.app-shell__header--mobile {
+  padding: 0 16px !important;
+}
+
+/* Sidebar Styles */
+.app-shell__sidebar {
+  background: linear-gradient(180deg,
+    rgba(20, 20, 20, 0.95) 0%,
+    rgba(10, 10, 10, 0.98) 100%) !important;
+  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.app-shell__sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.app-shell__sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.app-shell__sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.app-shell__sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.app-shell__sidebar-content {
+  height: 100%;
+  padding: 24px 16px;
+}
+
+/* Sidebar Toggle Button */
+.app-shell__sidebar-toggle {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.app-shell__sidebar:hover .app-shell__sidebar-toggle {
+  opacity: 1;
+}
+
+.app-shell__sidebar-toggle:hover {
+  background: var(--colors-background-elevated) !important;
+  border-color: var(--colors-brand-gold) !important;
+  color: var(--colors-brand-gold) !important;
+}
+
+/* Content Area */
+.app-shell__content {
+  position: relative;
+  background: var(--colors-background-primary);
+}
+
+.app-shell__content-wrapper {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .app-shell__header {
+    padding: 0 12px !important;
+  }
+
+  .app-shell__content-wrapper {
+    padding: 16px !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .app-shell__content-wrapper {
+    padding: 20px !important;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ant Design Overrides */
+.ant-layout-sider-trigger {
+  display: none !important;
+}
+
+.ant-layout-sider-collapsed .app-shell__sidebar-content {
+  padding: 24px 8px;
+}
+
+/* Dark Theme Optimizations */
+.app-shell * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+/* Focus Styles for Accessibility */
+.app-shell__sidebar-toggle:focus-visible {
+  outline: 2px solid var(--colors-brand-gold);
+  outline-offset: 2px;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 767px) {
+  .app-shell__content {
+    margin-left: 0 !important;
+  }
+}
