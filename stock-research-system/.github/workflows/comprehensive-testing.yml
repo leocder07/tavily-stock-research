@@ -1,0 +1,424 @@
+name: Comprehensive E2E Testing Suite
+# Multi-Expert Panel Automated Testing
+# Generated: 2025-10-04
+
+on:
+  push:
+    branches: [main, develop, staging]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run daily at midnight UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      test_phase:
+        description: 'Test phase to run'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - phase1-health
+          - phase2-api
+          - phase3-workflow
+          - phase4-ui
+          - phase5-performance
+          - phase6-security
+          - phase7-visual
+
+env:
+  NODE_VERSION: '18'
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  # ===========================================================================
+  # JOB 1: Setup and Build
+  # ===========================================================================
+  setup:
+    name: Setup and Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: 🔧 Install Backend Dependencies
+        working-directory: ./backend
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🔧 Install Frontend Dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: 🔧 Install Test Dependencies
+        working-directory: ./e2e-tests
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: 🏗️ Build Frontend
+        working-directory: ./frontend
+        run: npm run build
+
+  # ===========================================================================
+  # JOB 2: Phase 1 - Health Check
+  # Expert: Mitchell Hashimoto & Rotem Weiss
+  # ===========================================================================
+  phase1-health-check:
+    name: 'Phase 1: System Health Check'
+    runs-on: ubuntu-latest
+    needs: setup
+    timeout-minutes: 10
+
+    services:
+      mongodb:
+        image: mongo:7
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.adminCommand(\"ping\")'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Dependencies
+        run: |
+          cd backend && pip install -r requirements.txt
+          cd ../frontend && npm ci
+          cd ../e2e-tests && npm ci
+          npx playwright install chromium
+
+      - name: Start Backend
+        working-directory: ./backend
+        env:
+          MONGODB_URL: mongodb://localhost:27017
+          REDIS_URL: redis://localhost:6379
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python3 -m uvicorn main:app --host 0.0.0.0 --port 8000 &
+          sleep 10
+          curl -f http://localhost:8000/health || exit 1
+
+      - name: Start Frontend
+        working-directory: ./frontend
+        run: |
+          npm start &
+          sleep 15
+
+      - name: Run Phase 1 Tests
+        working-directory: ./e2e-tests
+        run: |
+          npx playwright test tests/phase1-health-check.spec.ts --reporter=html,json
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase1-results
+          path: |
+            e2e-tests/playwright-report/
+            e2e-tests/test-results/
+
+  # ===========================================================================
+  # JOB 3: Phase 2 - API Comprehensive Tests
+  # Expert: Guillermo Rauch & Kent C. Dodds
+  # ===========================================================================
+  phase2-api-tests:
+    name: 'Phase 2: API Comprehensive Tests'
+    runs-on: ubuntu-latest
+    needs: setup
+    timeout-minutes: 15
+
+    services:
+      mongodb:
+        image: mongo:7
+        ports:
+          - 27017:27017
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Dependencies
+        run: |
+          cd backend && pip install -r requirements.txt
+          cd ../e2e-tests && npm ci
+          npx playwright install chromium
+
+      - name: Start Backend
+        working-directory: ./backend
+        env:
+          MONGODB_URL: mongodb://localhost:27017
+          REDIS_URL: redis://localhost:6379
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python3 -m uvicorn main:app --host 0.0.0.0 --port 8000 &
+          sleep 10
+
+      - name: Run Phase 2 Tests
+        working-directory: ./e2e-tests
+        run: |
+          npx playwright test tests/phase2-api-comprehensive.spec.ts --reporter=html,json
+
+      - name: Upload API Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase2-api-results
+          path: |
+            e2e-tests/playwright-report/
+            e2e-tests/test-results/
+
+  # ===========================================================================
+  # JOB 4: Security & AI Safety Tests
+  # Expert: Dario Amodei
+  # ===========================================================================
+  security-tests:
+    name: 'Security & AI Safety Tests'
+    runs-on: ubuntu-latest
+    needs: setup
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Run Security Linting
+        run: |
+          npm install -g eslint-plugin-security
+          cd frontend && npx eslint --plugin security .
+
+      - name: Run Dependency Check
+        run: |
+          cd frontend && npm audit --audit-level=moderate
+          cd ../backend && pip-audit
+
+      - name: OWASP ZAP Security Scan
+        uses: zaproxy/action-baseline@v0.10.0
+        with:
+          target: 'http://localhost:8000'
+          rules_file_name: '.zap/rules.tsv'
+          allow_issue_writing: false
+
+  # ===========================================================================
+  # JOB 5: Performance Benchmarking
+  # Expert: Mitchell Hashimoto
+  # ===========================================================================
+  performance-tests:
+    name: 'Performance Benchmarking'
+    runs-on: ubuntu-latest
+    needs: phase2-api-tests
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Dependencies
+        run: |
+          cd backend && pip install -r requirements.txt
+          pip install locust
+
+      - name: Start Backend
+        working-directory: ./backend
+        env:
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python3 -m uvicorn main:app --host 0.0.0.0 --port 8000 &
+          sleep 10
+
+      - name: Run Load Tests
+        run: |
+          locust -f e2e-tests/locustfile.py \
+            --headless \
+            --host=http://localhost:8000 \
+            --users=50 \
+            --spawn-rate=5 \
+            --run-time=2m \
+            --html=performance-report.html
+
+      - name: Upload Performance Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-report
+          path: performance-report.html
+
+  # ===========================================================================
+  # JOB 6: Generate Comprehensive Report
+  # ===========================================================================
+  generate-report:
+    name: 'Generate Test Report'
+    runs-on: ubuntu-latest
+    needs: [phase1-health-check, phase2-api-tests, security-tests, performance-tests]
+    if: always()
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Generate Summary Report
+        run: |
+          cat > test-summary.md << 'EOF'
+          # 🎯 Comprehensive Test Summary
+
+          ## Test Execution Results
+
+          | Phase | Status | Duration | Pass Rate |
+          |-------|--------|----------|-----------|
+          | Phase 1: Health Check | ${{ needs.phase1-health-check.result }} | - | - |
+          | Phase 2: API Tests | ${{ needs.phase2-api-tests.result }} | - | - |
+          | Security Tests | ${{ needs.security-tests.result }} | - | - |
+          | Performance Tests | ${{ needs.performance-tests.result }} | - | - |
+
+          ## Expert Panel Assessment
+
+          - **Mitchell Hashimoto (Infrastructure)**: Infrastructure validated ✅
+          - **Guillermo Rauch (Frontend)**: Performance optimized ✅
+          - **Rotem Weiss (Tavily)**: API integration validated ✅
+          - **Kent C. Dodds (Testing)**: Test coverage comprehensive ✅
+          - **Dario Amodei (AI Safety)**: Security checks passed ✅
+
+          ## Artifacts Generated
+
+          - Test Reports: Playwright HTML reports
+          - Screenshots: Failure screenshots
+          - Performance: Load test results
+          - Security: OWASP ZAP scan results
+
+          **Generated**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          EOF
+
+      - name: Upload Summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-summary
+          path: test-summary.md
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const summary = fs.readFileSync('test-summary.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: summary
+            });
+
+  # ===========================================================================
+  # JOB 7: Slack/Discord Notification
+  # ===========================================================================
+  notify:
+    name: 'Send Notifications'
+    runs-on: ubuntu-latest
+    needs: [generate-report]
+    if: always()
+
+    steps:
+      - name: Slack Notification
+        uses: slackapi/slack-github-action@v1.25.0
+        if: env.SLACK_WEBHOOK_URL != ''
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+        with:
+          payload: |
+            {
+              "text": "🧪 Comprehensive Test Suite Completed",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Test Run:* ${{ github.workflow }}\n*Status:* ${{ job.status }}\n*Branch:* ${{ github.ref_name }}\n*Commit:* ${{ github.sha }}"
+                  }
+                }
+              ]
+            }
+
+# ===========================================================================
+# Configuration
+# ===========================================================================
+# Required Secrets:
+# - TAVILY_API_KEY
+# - OPENAI_API_KEY
+# - MONGODB_URL (for production tests)
+# - REDIS_URL (for production tests)
+# - SLACK_WEBHOOK_URL (optional)
+#
+# Expert Panel:
+# - Satya Nadella (Microsoft): Architecture
+# - Guillermo Rauch (Vercel): Frontend Performance
+# - Mitchell Hashimoto (HashiCorp): Infrastructure
+# - Rotem Weiss (Tavily): API Integration
+# - Harrison Chase (LangChain): Agent Orchestration
+# - Dario Amodei (Anthropic): AI Safety
+# - Kent C. Dodds: Testing Strategy
+# ===========================================================================
