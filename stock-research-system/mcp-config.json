@@ -1,0 +1,87 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem"],
+      "comment": "Essential for file operations in Stock Research System"
+    },
+
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "ghp_YOUR_GITHUB_TOKEN_HERE"
+      },
+      "comment": "For version control and PR creation"
+    },
+
+    "ripgrep": {
+      "command": "npx",
+      "args": ["-y", "@mseep/mcp-ripgrep"],
+      "comment": "Fast code search across the entire codebase"
+    },
+
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@automatalabs/mcp-server-playwright"],
+      "comment": "E2E testing for Stock Research UI flows"
+    },
+
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": {
+        "CONTEXT7_API_KEY": "c7_YOUR_API_KEY_HERE"
+      },
+      "comment": "Up-to-date docs for Tavily API, LangGraph, MongoDB"
+    },
+
+    "mongodb": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-mongodb",
+        "mongodb+srv://vkpr15_db_user:APqFt5CZM0q9woLe@stockresearcher.oyxs2ia.mongodb.net/stock_research"
+      ],
+      "comment": "Direct MongoDB Atlas access for Stock Research data"
+    },
+
+    "mermaid": {
+      "command": "npx",
+      "args": ["-y", "@peng-shawn/mermaid-mcp-server"],
+      "comment": "Generate architecture diagrams for multi-agent system"
+    },
+
+    "memgraph": {
+      "command": "uvx",
+      "args": ["mcp-memgraph"],
+      "env": {
+        "MEMGRAPH_URI": "bolt://127.0.0.1:7687",
+        "MEMGRAPH_USER": "memgraph",
+        "MEMGRAPH_PASSWORD": "memgraph"
+      },
+      "comment": "Graph database for stock relationships and agent workflows"
+    }
+  },
+
+  "projectSpecific": {
+    "stockResearchSystem": {
+      "description": "Multi-agent Stock Research System with LangGraph",
+      "primaryServers": ["filesystem", "ripgrep", "playwright", "mongodb"],
+      "architecture": {
+        "frontend": "React + TypeScript + CRED Design",
+        "backend": "FastAPI + LangGraph + Tavily",
+        "database": "MongoDB Atlas",
+        "agents": [
+          "QueryParser",
+          "MarketData",
+          "Fundamental",
+          "Technical",
+          "Sentiment",
+          "Risk",
+          "Synthesis"
+        ]
+      }
+    }
+  }
+}
