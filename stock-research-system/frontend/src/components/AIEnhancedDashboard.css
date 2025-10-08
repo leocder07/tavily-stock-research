@@ -1,0 +1,360 @@
+/* AI Enhanced Dashboard - Industry Leader Standards */
+
+.ai-enhanced-dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0e1b 0%, #10162490%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Header Styles */
+.dashboard-header {
+  background: linear-gradient(135deg, rgba(10, 14, 27, 0.98), rgba(16, 22, 36, 0.98));
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  height: 72px;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.logo-text {
+  background: linear-gradient(135deg, #722ed1, #eb2f96);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Content Styles */
+.dashboard-content {
+  padding: 24px 32px;
+  min-height: calc(100vh - 72px);
+}
+
+/* Tab Styles */
+.dashboard-tabs .ant-tabs-nav {
+  margin-bottom: 0;
+}
+
+.dashboard-tabs .ant-tabs-tab {
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 500;
+  padding: 12px 20px;
+  transition: all 0.3s ease;
+}
+
+.dashboard-tabs .ant-tabs-tab:hover {
+  color: #fff;
+}
+
+.dashboard-tabs .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #fff;
+  position: relative;
+}
+
+.dashboard-tabs .ant-tabs-tab-active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 20px;
+  right: 20px;
+  height: 3px;
+  background: linear-gradient(90deg, #722ed1, #eb2f96);
+  border-radius: 2px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.dashboard-tabs .ant-tabs-ink-bar {
+  display: none;
+}
+
+/* Glass Card Effects */
+.glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(114, 46, 209, 0.15);
+  border-color: rgba(114, 46, 209, 0.3);
+}
+
+/* Metrics Card */
+.metrics-card {
+  background: linear-gradient(135deg, rgba(114, 46, 209, 0.1), rgba(235, 47, 150, 0.05));
+}
+
+.metrics-card .ant-statistic-title {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.metrics-card .ant-statistic-content {
+  color: #fff;
+  font-size: 20px;
+}
+
+/* Floating Widget */
+.floating-widget {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 99;
+  cursor: grab;
+}
+
+.floating-widget:active {
+  cursor: grabbing;
+}
+
+.floating-widget .ant-card {
+  background: linear-gradient(135deg, rgba(114, 46, 209, 0.9), rgba(235, 47, 150, 0.9));
+  border: none;
+  box-shadow: 0 8px 32px rgba(114, 46, 209, 0.4);
+}
+
+.floating-widget .ant-card-body {
+  padding: 16px;
+}
+
+/* Badge Customization */
+.ant-badge-status-processing {
+  position: relative;
+}
+
+.ant-badge-status-processing::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #52c41a;
+  animation: ripple 2s infinite;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+/* Progress Customization */
+.ant-progress-circle .ant-progress-text {
+  color: #fff !important;
+  font-weight: 600;
+}
+
+/* Button Enhancements */
+.ant-btn-primary {
+  background: linear-gradient(135deg, #722ed1, #eb2f96);
+  border: none;
+  height: 40px;
+  padding: 0 24px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.ant-btn-primary:hover {
+  background: linear-gradient(135deg, #8b39e6, #f056a4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(114, 46, 209, 0.4);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard-content > div {
+  animation: fadeInUp 0.5s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .dashboard-header {
+    padding: 0 24px;
+  }
+
+  .dashboard-content {
+    padding: 20px 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    height: 64px;
+    padding: 0 16px;
+  }
+
+  .header-content {
+    gap: 16px;
+  }
+
+  .header-right {
+    display: none;
+  }
+
+  .dashboard-content {
+    padding: 16px;
+  }
+
+  .dashboard-tabs .ant-tabs-tab {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .floating-widget {
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+/* Dark Theme Overrides */
+.ant-layout {
+  background: transparent;
+}
+
+.ant-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ant-card-head {
+  color: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ant-card-body {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Performance Optimizations */
+.dashboard-tabs,
+.glass-card,
+.floating-widget {
+  will-change: transform;
+}
+
+/* Print Styles */
+@media print {
+  .dashboard-header,
+  .floating-widget {
+    display: none;
+  }
+
+  .dashboard-content {
+    padding: 0;
+  }
+
+  .glass-card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}
+
+/* Loading States */
+.dashboard-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.dashboard-loading .ant-spin-dot {
+  font-size: 48px;
+}
+
+/* Error States */
+.dashboard-error {
+  text-align: center;
+  padding: 48px;
+}
+
+.dashboard-error h2 {
+  color: #ff4d4f;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.dashboard-error p {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 16px;
+}
+
+/* Accessibility */
+.dashboard-tabs .ant-tabs-tab:focus-visible {
+  outline: 2px solid #722ed1;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.ant-btn:focus-visible {
+  outline: 2px solid #722ed1;
+  outline-offset: 2px;
+}
+
+/* Custom Scrollbar */
+.dashboard-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dashboard-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.dashboard-content::-webkit-scrollbar-thumb {
+  background: rgba(114, 46, 209, 0.3);
+  border-radius: 4px;
+}
+
+.dashboard-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(114, 46, 209, 0.5);
+}

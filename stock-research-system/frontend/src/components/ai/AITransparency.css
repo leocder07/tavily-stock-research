@@ -1,0 +1,290 @@
+/* AI Transparency Dashboard Styles */
+
+.ai-transparency-dashboard {
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(10, 14, 27, 0.95), rgba(16, 22, 36, 0.95));
+  border-radius: 16px;
+  min-height: 600px;
+}
+
+.metric-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 212, 255, 0.15);
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+.metric-card .ant-statistic-title {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.metric-card .ant-statistic-content {
+  color: #ffffff;
+}
+
+/* Model Usage Table */
+.model-usage-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.model-usage-table thead {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(124, 58, 237, 0.1));
+}
+
+.model-usage-table th {
+  padding: 12px 16px;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.model-usage-table td {
+  padding: 10px 16px;
+  color: rgba(255, 255, 255, 0.75);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.model-usage-table tr:hover {
+  background: rgba(0, 212, 255, 0.05);
+}
+
+.model-usage-table .ant-badge {
+  margin-right: 8px;
+}
+
+/* Memory Statistics */
+.memory-stat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.memory-type {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  min-width: 150px;
+}
+
+.memory-count {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 12px;
+  min-width: 60px;
+  text-align: right;
+}
+
+.memory-stat .ant-progress {
+  flex: 1;
+  margin: 0 16px;
+}
+
+/* Execution Step Cards */
+.execution-step-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.execution-step-card h4 {
+  color: #00D4FF;
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.execution-step-card p {
+  color: rgba(255, 255, 255, 0.65);
+  margin: 4px 0;
+  font-size: 13px;
+}
+
+/* Timeline Customization */
+.ant-timeline-item-head {
+  background: transparent !important;
+  border-color: #00D4FF !important;
+}
+
+.ant-timeline-item-tail {
+  border-left: 2px solid rgba(0, 212, 255, 0.2) !important;
+}
+
+.ant-timeline-item-content {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Progress Bars */
+.ant-progress-inner {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Tabs Customization */
+.ai-transparency-dashboard .ant-tabs-tab {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.ai-transparency-dashboard .ant-tabs-tab:hover {
+  color: #00D4FF;
+}
+
+.ai-transparency-dashboard .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #00D4FF;
+}
+
+.ai-transparency-dashboard .ant-tabs-ink-bar {
+  background: linear-gradient(90deg, #00D4FF, #7C3AED);
+}
+
+/* Chart Customization */
+.ai-transparency-dashboard canvas {
+  border-radius: 8px;
+}
+
+/* Glass Card Effects */
+.glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.glass-card .ant-card-head {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.glass-card .ant-card-body {
+  padding: 20px;
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+  }
+}
+
+.metric-card.processing {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ai-transparency-dashboard {
+    padding: 12px;
+  }
+
+  .model-usage-table {
+    font-size: 12px;
+  }
+
+  .model-usage-table th,
+  .model-usage-table td {
+    padding: 8px 12px;
+  }
+
+  .memory-type {
+    min-width: 120px;
+    font-size: 13px;
+  }
+
+  .execution-step-card h4 {
+    font-size: 14px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .ai-transparency-dashboard {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(10, 10, 10, 0.95));
+  }
+
+  .metric-card,
+  .glass-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  }
+}
+
+/* Loading States */
+.ai-loading-skeleton {
+  background: linear-gradient(90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading-wave 1.5s infinite;
+}
+
+@keyframes loading-wave {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Tooltip Styles */
+.ant-tooltip-inner {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.ant-tooltip-arrow-content {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+/* Status Indicators */
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.status-indicator.active {
+  background: #52c41a;
+  animation: pulse 2s infinite;
+}
+
+.status-indicator.processing {
+  background: #1890ff;
+  animation: pulse 1s infinite;
+}
+
+.status-indicator.error {
+  background: #ff4d4f;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
